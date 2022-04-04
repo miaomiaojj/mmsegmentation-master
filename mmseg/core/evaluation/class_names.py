@@ -1,7 +1,16 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import mmcv
 
+def StanfordBackgroundDataset_classes():
+    """StanfordBackgroundDataset class names for external use."""
+    return [
+        'sky', 'tree', 'road', 'grass', 'water', 'bldg', 'mntn', 'fg obj'
+    ]
 
+def StanfordBackgroundDataset_palette():
+    """Cityscapes palette for external use."""
+    return [[128, 128, 128], [129, 127, 38], [120, 69, 125], [53, 125, 34], [0, 11, 123], [118, 20, 12], [122, 81, 25], [241, 134, 51]]
+	
 def cityscapes_classes():
     """Cityscapes class names for external use."""
     return [
