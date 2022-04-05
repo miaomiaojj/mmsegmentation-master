@@ -1,7 +1,7 @@
 norm_cfg = dict(type='BN', requires_grad=True)
 model = dict(
     type='EncoderDecoder',
-    pretrained='open-mmlab://resnet50_v1c',
+    #pretrained='open-mmlab://resnet50_v1c',
     backbone=dict(
         type='ResNetV1c',
         depth=50,
@@ -10,6 +10,7 @@ model = dict(
         dilations=(1, 1, 2, 4),
         strides=(1, 2, 1, 1),
         norm_cfg=dict(type='BN', requires_grad=True),
+		init_cfg=dict(type='Pretrained', checkpoint='open-mmlab://resnet50_v1c'),
         norm_eval=False,
         style='pytorch',
         contract_dilation=True),
@@ -161,4 +162,4 @@ optimizer_config = dict()
 lr_config = dict(policy='poly', power=0.9, min_lr=0.0001, by_epoch=False)
 runner = dict(type='IterBasedRunner', max_iters=600000)
 checkpoint_config = dict(by_epoch=False, interval=2000)
-evaluation = dict(interval=200, metric=['mIoU', 'mDice'], pre_eval=True)
+evaluation = dict(interval=2000, metric=['mIoU', 'mDice'], pre_eval=True)
