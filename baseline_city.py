@@ -27,7 +27,7 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=True),
         align_corners=False,
         loss_decode=dict(
-            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0#,
+            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0,
             #class_weight=[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]            
             )),
     auxiliary_head=dict(
@@ -160,6 +160,6 @@ cudnn_benchmark = True
 optimizer = dict(type='SGD', lr=0.001, momentum=0.9)
 optimizer_config = dict()
 lr_config = dict(policy='poly', power=0.9, min_lr=0.0001, by_epoch=False)
-runner = dict(type='IterBasedRunner', max_iters=600000)
+runner = dict(type='IterBasedRunner', max_iters=20000)
 checkpoint_config = dict(by_epoch=False, interval=2000)
 evaluation = dict(interval=2000, metric=['mIoU', 'mDice'], pre_eval=True)
