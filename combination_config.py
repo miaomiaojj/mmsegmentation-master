@@ -22,7 +22,7 @@ model = dict(
         dilations=(1, 12, 24, 36),
         c1_in_channels=256,
         c1_channels=48,
-        dropout_ratio=0.0,
+        dropout_ratio=0.1,
         num_classes=8,
         norm_cfg=dict(type='BN', requires_grad=True),
         align_corners=False,
@@ -37,7 +37,7 @@ model = dict(
         channels=256,
         num_convs=1,
         concat_input=False,
-        dropout_ratio=0.0,
+        dropout_ratio=0.1,
         num_classes=8,
         norm_cfg=dict(type='BN', requires_grad=True),
         align_corners=False,
@@ -52,7 +52,8 @@ img_norm_cfg = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
-    dict(type='RandomFlip', prob=0.0),    
+    dict(type='RandomFlip', prob=0.5),   
+    dict(type='RandomCrop', crop_size=(256, 240), cat_max_ratio=0.75), 
     dict(type='Resize', img_scale=(320, 240), ratio_range=(0.5, 2.0)),
     dict(
         type='Normalize',
@@ -92,7 +93,8 @@ data = dict(
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
-            dict(type='RandomFlip', prob=0.0),            
+            dict(type='RandomFlip', prob=0.5),    
+            dict(type='RandomCrop', crop_size=(256, 240), cat_max_ratio=0.75),        
             dict(
                 type='Normalize',
                 mean=[123.675, 116.28, 103.53],
@@ -157,9 +159,9 @@ load_from = None
 resume_from = None
 workflow = [('train', 1)]
 cudnn_benchmark = True
-optimizer = dict(type='SGD', lr=0.001, momentum=0.9)
+optimizer = dict(type='SGD', lr=0.001, momentum=0.9,weight_decay=0.0005)
 optimizer_config = dict()
 lr_config = dict(policy='poly', power=0.9, min_lr=0.0001, by_epoch=False)
-runner = dict(type='IterBasedRunner', max_iters=200000)
+runner = dict(type='IterBasedRunner', max_iters=20000)
 checkpoint_config = dict(by_epoch=False, interval=2000)
 evaluation = dict(interval=2000, metric=['mIoU', 'mDice'], pre_eval=True)
